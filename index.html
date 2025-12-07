@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="description" content="Project website for Trop Forecast based Foundation Models">
+    <meta name="author" content="Jason Ding">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./asset/css2" rel="stylesheet">
+
+    <title>TropAI</title>
+    <link rel="icon" href="./asset/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./asset/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./asset/bootstrap.min.css">
+    <link rel="stylesheet" href="./asset/project.css">
+    <link rel="stylesheet" type="text/css" href="./asset/slick.css">
+    
+    <link rel="stylesheet" type="text/css" href="./asset/slick-theme.css">
+
+    <script type="text/javascript">
+        var sc_project=13005954; 
+        var sc_invisible=1; 
+        var sc_security="272ec988"; 
+        </script>
+        <script type="text/javascript" src="./asset/counter.js.下载" async=""></script>
+        <noscript><div class="statcounter"><a title="Web Analytics"
+        href="https://statcounter.com/" target="_blank"><img
+        class="statcounter"
+        src="https://c.statcounter.com/13005954/0/272ec988/1/"
+        alt="Web Analytics"
+        referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+
+<style>
+    #canvas-container {
+        background-color: rgb(178, 178, 178);
+        position: relative;  
+    }
+    #canvas {
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+    .container{
+        max-width: 1000px;
+    }
+    .arrow {
+        border: solid black;
+        border-width: 0 4px 4px 0;
+
+        position: absolute;
+        top: 50%;
+
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        cursor: pointer;
+    }
+
+    .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        right: -25px;
+    }
+
+    .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        left: -25px;
+    }
+
+    .nav-item img {
+        max-width: 100%;
+         
+        height: auto;
+        display: block;
+    }
+
+    .nav-item p {
+        text-align: center;
+        font-family: 'Mulish', sans-serif;
+        font-weight: 500;
+        line-height: 1.5rem;
+        font-size: 1.2rem;
+        color: black;
+    }
+
+    .interactive-item {
+        align-content: center;
+    }
+
+    .interactive-item video {
+        max-width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .interactive-item p {
+        text-align: center;
+        font-family: 'Mulish', sans-serif;
+        font-weight: 500;
+        line-height: 1.5rem;
+        font-size: 1.2rem;
+        color: black;
+    }
+
+    .interactive-container {
+        margin-bottom: 0rem;
+        display: grid !important;
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr;
+        gap: 0% 1%;
+        justify-content: center;
+    }
+
+    .generated-container {
+      margin-bottom: 1rem;
+      display: grid !important;
+      grid-template-columns: 100%;
+      grid-template-rows: 1fr;
+      gap: 0% 1%;
+      justify-content: center;
+  }
+
+    .teaser-item {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    .two-column-section {
+      display: flex;
+      width: 100%;
+      border-left: 10px;
+      border-right: 10px;
+    }
+    
+    .two-column-section .column {
+        padding: 0px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .two-column-section .first-column {
+        width: 37%;
+        padding-left: 2%;
+    }
+    
+    .two-column-section .second-column {
+        width: 63%;
+        padding-right: 2%;
+    }
+
+     
+    .key-feedback {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        display: flex;
+        flex-direction: column;
+        pointer-events: none;  
+    }
+
+    .key-row {
+        display: flex;
+        gap: 4px;
+    }
+
+    .key-icon {
+        width: 36px;
+        height: 36px;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+        text-align: center;
+        line-height: 32px;
+        font-weight: 700;
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
+        font-family: 'Mulish', sans-serif;
+        font-size: 18px;
+        transition: background 0.1s ease;
+    }
+
+    .key-icon.active {
+        background: rgba(255, 255, 255, 0.85);
+        color: black;
+    }
+
+     
+    .key-grid {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        grid-template-rows: repeat(2, auto);
+        gap: 4px;
+    }
+
+    .arrow-feedback {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;  
+        pointer-events: none;
+    }
+
+</style><style>@keyframes loading {
+    0% {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.ag-textarea .MuiInputBase-input::-webkit-scrollbar {
+    height: 6px;
+    width: 6px
+}
+
+.ag-textarea .MuiInputBase-input::-webkit-scrollbar-track {
+    background: transparent
+}
+
+.ag-textarea .MuiInputBase-input::-webkit-scrollbar-thumb {
+    background: #dfdfdf;
+    border-radius: 4px
+}
+
+.ag-textarea .MuiInputBase-input::-webkit-scrollbar-thumb:hover {
+    background: #d4d4d4
+}</style><style>.translated-content .ytCoreImageHost {
+    visibility: visible;
+}</style></head>
+
+
+
+<body data-new-gr-c-s-check-loaded="14.1265.0" data-gr-ext-installed="" style="">
+    <section>
+        <div class="container">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 col-sm-12 mt-4">
+                                                                       
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="title">
+                <p class="col text-center text-title">
+                    Forecasting of Tropospheric Delay Using AI Foundation Models in Support of Microwave Remote Sensing
+                </p>
+            </div>
+
+            
+            <div class="row" id="authors">
+                <div class="col-md-12 text-center mt-2 text-author">
+                    <ul class="list-inline">
+                        <li class="list-inline-item mx-2">
+                            <a href="https://dingjunsheng.top/about/">
+                                <p>Junsheng Ding<sup>1</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://scholar.google.com/citations?user=Ps_txBAAAAAJ&hl=en">
+                                <p>Xiaolong Mi<sup>1</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://scholar.google.com/citations?user=yjK9vMoAAAAJ&hl=en">
+                                <p>Wu Chen<sup>1</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="http://202.127.29.4/shao_gnss_ac/">
+                                <p>Junping Chen<sup>2,3,4</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://scholar.google.com/citations?user=lYJUfgIAAAAJ&hl=en">
+                                <p>Jungang Wang<sup>2,5,6</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://yizezhang.github.io/about/">
+                                <p>Yize Zhang<sup>2,4</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://www.josephawange.org/">
+                                <p>Joseph L. Awange<sup>7</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://space.igp.ethz.ch/">
+                                <p>Benedikt Soja<sup>8</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://scholar.google.com/citations?user=sakOO04AAAAJ&hl=en">
+                                <p>Lei Bai<sup>9</sup></p>
+                            </a>
+                        </li>
+                       <li class="list-inline-item mx-2">
+                            <a href="https://www.researchgate.net/profile/Deng-Yuanfan">
+                                <p>Yuanfan Deng<sup>1</sup></p>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="https://www.researchgate.net/profile/Wenjie-Tang-6">
+                                <p>Wenjie Tang<sup>2,3</sup></p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-inline">
+                        <li class="list-inline-item mx-4">
+                            <p><sup>1</sup>The Hong Kong Polytechnic University</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>2</sup>Shanghai Astronomical Observatory</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>3</sup>UCAS</p>
+                        </li>
+                      <li class="list-inline-item mx-4">
+                            <p><sup>4</sup>Shanghai Key Laboratory of SNPT</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>5</sup>GeoForschungsZentrum (GFZ)</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>6</sup>Technische Universität Berlin</p>
+                        </li>
+                      <li class="list-inline-item mx-4">
+                            <p><sup>7</sup>Curtin University</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>8</sup>ETH Zurich</p>
+                        </li>
+                        <li class="list-inline-item mx-4">
+                            <p><sup>9</sup>Shanghai AI Laboratory</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            
+
+            <div class="row" id="venue">
+                <p class="col text-center text-venue">
+                  IEEE TGRS 2024
+                </p>
+              </div>
+
+            <div class="row" id="resources">
+                <div class="col text-center mt-m4">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="https://doi.org/10.1109/TGRS.2024.3488727" class="resource-button">
+                                <img src="./asset/paper_icon_rev.png" class="button-icon">
+                                Paper
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://doi.org/10.13140/RG.2.2.30929.03686" class="resource-button">
+                                <img src="./asset/presentation_icon_rev.png" class="button-icon">
+                                Presentation
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://mp.weixin.qq.com/s/YfimR5av849oiFdZHJvI_Q" class="resource-button">
+                                <img src="./asset/wechat_icon_rev.png" class="button-icon">
+                                WeChat
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Global Tropospheric Delay based on AI Models<br>
+                    </p>
+                    <div class="teaser-item">
+                        <p class="body-text">
+                            This work enables users to generate real-time and forecast global tropospheric delay products locally for geodetic 
+                            and remote sensing applications. It is built on weather forecasting foundation models such as Huawei Cloud's Pangu-Weather, 
+                            Google DeepMind's GraphCast, and Shanghai AI Lab's FengWu. The solution supports real-time forecasting of global tropospheric 
+                            delay products with hourly resolution, allowing local inference and computation to be completed in just a few minutes on any user's local device.
+                        </p>
+                    </div>
+                    <div class="container" style="width: 100%; overflow: hidden;">
+                        <img src="./asset/zhd.gif" ,="" class="approach-figure" style="width: 48%; float: left; margin-right: 2%;">
+                        <img src="./asset/zwd.gif" ,="" class="approach-figure" style="width: 48%; float: left;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="approach">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Approach
+                    </p>
+                    <div class="container">
+                        <img src="./asset/flow.png" ,="" class="approach-figure"  width="96%">
+                    </div>
+                    <p class="body-text" style="margin-top: 1rem;">
+                        The solution first obtains the initial field, then feeds it into the foundation model for inference. 
+                        Using the forecast atmospheric state output by the inference, it computes to generate real-time and forecast tropospheric 
+                        delay products—such as zenith delay, mapping functions, and gradients—as well as weighted mean temperature and precipitable water vapor.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="approach">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Products
+                    </p>
+                    <div class="container">
+                    <p class="body-text" style="margin-top: 1rem;">
+                        The product format follows the VMF3 standard and is available in both grid-wise and site-wise versions. 
+                        The site-wise version includes additional GNSS stations from NGL and radiosonde stations from IGRA. In addition to three AI 
+                        foundation model-based versions, the product also offers the ERA5-based version.
+                    </p>
+                    </div>
+                    <div class="container">
+                        <img src="./asset/products.png" ,="" class="approach-figure" style="width: 60%;>
+                    </div>
+                    <div class="container">
+                    <p class="body-text" style="margin-top: 1rem;">
+                        In addition to providing products on global grid points, it also offers site-wise products, covering stations from four geodetic techniques (GNSS, VLBI, SLR, DORIS), 
+                        as well as over 22,000 GNSS stations from NGL and more than 2,600 radiosonde stations from IGRA. The geographical distribution of these stations is shown below.
+                    </p>
+                    </div>
+                    <div class="container" style="width: 100%; overflow: hidden;">
+                        <img src="./asset/geodesy.png" ,="" class="approach-figure" style="width: 48%; float: left; margin-right: 2%;">
+                        <img src="./asset/ngl_rs.png" ,="" class="approach-figure" style="width: 48%; float: left;">
+                    </div>
+                    <div class="container">
+                    <p class="body-text" style="margin-top: 1rem;">
+                        Currently supported tropospheric delay products are listed in the table below.
+                    </p>
+                    </div>
+                    <div class="container" style="width: 100%; overflow: hidden;">
+												<table border="1" width="96%" cellspacing="0.1" cellpadding="0.1" align="center">
+														<tr>
+															<td width="69" align="center"><b>No.</b></td>
+															<td width="152"><b>Types</b></td>
+															<td width="152" align="center"><b>Variables</b></td>
+															<td width="661"><b>Full name</b></td>
+														</tr>
+														<tr>
+															<td width="69" align="center">1</td>
+															<td width="152" rowspan="3">Meteorological </td>
+															<td width="152" align="center">p</td>
+															<td width="661">Pressure in [hPa]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">2</td>
+															<td width="152" align="center">T</td>
+															<td width="661">Temperature in [&#176C]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">3</td>
+															<td width="152" align="center">e</td>
+															<td width="661"><span style="font-weight: 400">Water vapour pressure 
+															in [hPa]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">4</td>
+															<td width="152" rowspan="6">Tropospheric</td>
+															<td width="152" align="center">ZHD</td>
+															<td width="661">Zenith hydrostatic delay in [m]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">5</td>
+															<td width="152" align="center">ZWD</td>
+															<td width="661">Zenith wet delay<span style="font-weight: 400"> in 
+															[m]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">6</td>
+															<td width="152" align="center">ah</td>
+															<td width="661">H<span style="font-weight: 400">ydrostatic </span>
+															mapping function coefficient &quot;a&quot;</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">7</td>
+															<td width="152" align="center">aw</td>
+															<td width="661">W<span style="font-weight: 400">et mapping function 
+															coefficient &quot;a&quot;</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">8</td>
+															<td width="152" align="center">SHD</td>
+															<td width="661">S<span style="font-weight: 400">lant hydrostatic 
+															delay at 3 &#176 elevation angle&nbsp; in [m]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">9</td>
+															<td width="152" align="center">SWD</td>
+															<td width="661">S<span style="font-weight: 400">lant wet delay at 3 
+															&#176 elevation angle&nbsp; in [m]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">10</td>
+															<td width="152" rowspan="4">Linear Horizontal Gradients</td>
+															<td width="152" align="center">Gn<SUB>h</SUB></td>
+															<td width="661">hydrostatic north gradient in [mm]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">11</td>
+															<td width="152" align="center">Gn<SUB>w</SUB></td>
+															<td width="661">wet<span style="font-weight: 400"> north gradient in 
+															[mm]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">12</td>
+															<td width="152" align="center">Ge<SUB>h</SUB></td>
+															<td width="661"><span style="font-weight: 400">hydrostatic east 
+															gradient in [mm]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">13</td>
+															<td width="152" align="center">Ge<SUB>w</SUB></td>
+															<td width="661">wet<span style="font-weight: 400"> east gradient in 
+															[mm]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">14</td>
+															<td width="152" rowspan="2">Meteorology</td>
+															<td width="152" align="center">Tm</td>
+															<td width="661">Weighted mean temperature <span style="font-weight: 400">&nbsp;in 
+															[K]</td>
+														</tr>
+														<tr>
+															<td width="69" align="center">15</td>
+															<td width="152" align="center">PWV</td>
+															<td width="661">Precipitable water vapor <span style="font-weight: 400">&nbsp;in 
+															[mm]</td>
+														</tr>
+												</table>
+										</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="abstract">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Abstract
+                    </p>
+                    <p class="body-text">
+												This paper presents for the first time a geodetic and remote sensing tropospheric delay correction scheme based on AI weather forecast foundation models. 
+												Based on three foundation models, namely Pangu-Weather, GraphCast and FengWu, the tropospheric delay parameters for the entire year of 2022 were calculated, 
+												including zenith delay, mapping function and horizontal gradient, and the new scheme was evaluated and tested. 
+												The results show that the new scheme can generate high-precision 15-day 6-hour resolution tropospheric delay 
+												forecasts for any location on the globe within minutes at the user's local site. The forecast results are superior 
+												to the current best forecast model product VMF3_FC in terms of forecast length, forecast delay and accuracy. 
+												We suggest using the scheme proposed in this paper to replace the existing forecast product generation methods. 
+												In addition, we also suggest that users with the conditions and needs can bypass the mapping function model and 
+												gradient model and directly calculate the slant path delay at the user's local site to avoid the errors brought 
+												by these two types of models and grid interpolation. The number of pressure levels supported by the model and 
+												the accuracy of the initial input NWM are very important for tropospheric delay forecasting based on large models. 
+												We hope that more large models supporting 37-layer input will emerge in the future. In addition, increasing the weight 
+												of space geodetic observations in NWM numerical assimilation will also help improve the accuracy of this scheme.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="approach">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Related Projects
+                    </p>
+                    <p class="body-text" style="margin-top: 1rem;">
+                        </p><ul>
+                            <li>
+                                Pangu-Weather <a href="https://github.com/198808xc/Pangu-Weather">
+                                    Accurate medium-range global weather forecasting with 3D neural networks
+                                    </a>
+                            </li>
+                            <li>
+                                GraphCast <a href="https://github.com/google-deepmind/graphcast">
+                                    Learning skillful medium-range global weather forecasting
+                                    </a>
+                            </li>
+                            <li>
+                                FengWu <a href="https://github.com/OpenEarthLab/FengWu">
+                                    The operational medium-range deterministic weather forecasting can be extended beyond a 10-day lead time
+                                    </a>
+                            </li>
+                            <li>
+                                ai-models <a href="https://github.com/ecmwf-lab/ai-models">
+                                    Command line program used to run AI-based weather forecasting models
+                                    </a>
+                            </li>
+                            <li>
+                                RADIATE <a href="https://github.com/TUW-VieVS/RADIATE">
+                                    Open source ray-tracing software developted by TUM
+                                    </a>
+                            </li>
+                         </ul>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+            <div class="row" id="citation">
+                <div class="col my-3">
+                    <p class="text-header">
+                        BibTeX
+                    </p>
+                    <div class="citation-block">
+                        <div id="citation-text" class="citation-content">
+@article{ding2024forecasting,
+  title={Forecasting of tropospheric delay using AI foundation models in support of microwave remote sensing},
+  author={Ding, Junsheng and Mi, Xiaolong and Chen, Wu and Chen, Junping and Wang, Jungang and Zhang, Yize and Awange, Joseph L and Soja, Benedikt and Bai, Lei and Deng, Yuanfan and others},
+  journal={IEEE Transactions on Geoscience and Remote Sensing},
+  year={2024},
+  publisher={IEEE}
+}
+                        </div>
+                        <button onclick="copyToClipboard()" class="button active mt-2">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $('.slider-for-interactive').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                var video = $(slick.$slides[nextSlide]).find('video');
+                var videoSource = video.find('source[data-lazy]');
+                if (videoSource.length) {
+                    videoSource.attr('src', videoSource.data('lazy'));
+                    videoSource.removeAttr('data-lazy');
+                    video.get(0).load();
+                }
+            });
+            $('.slider-nav-interactive').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                asNavFor: '.slider-for-interactive',
+                dots: true,
+                centerMode: true,
+                centerPadding: '10%',
+                focusOnSelect: true,
+                nextArrow: '<div class="arrow right"></div>',
+                prevArrow: '<div class="arrow left"></div>',
+            });
+            $('.slider-for-interactive').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.slider-nav-interactive',
+                autoplay: true,
+                speed: 300,
+                autoplaySpeed: 100000,
+                lazyLoad: 'ondemand'
+            });
+    
+            
+            $('.slider-for-complete').on('init', function(event, slick){
+                var firstVideo = $(slick.$slides[0]).find('video');
+                var firstVideoSource = firstVideo.find('source');
+                if (firstVideoSource.attr('data-lazy')) {
+                    firstVideoSource.attr('src', firstVideoSource.attr('data-lazy'));
+                    firstVideoSource.removeAttr('data-lazy');
+                    firstVideo[0].load();
+                    firstVideo[0].play();
+                }
+            });
+    
+            $('.slider-for-complete').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                var nextSlideElem = $(slick.$slides[nextSlide]);
+                var video = nextSlideElem.find('video');
+                var source = video.find('source');
+                
+                if (source.attr('data-lazy')) {
+                    source.attr('src', source.attr('data-lazy'));
+                    source.removeAttr('data-lazy');
+                    video[0].load();
+                }
+            });
+    
+            $('.slider-for-complete').on('afterChange', function(event, slick, currentSlide) {
+                var currentSlideElem = $(slick.$slides[currentSlide]);
+                var video = currentSlideElem.find('video');
+                if (video.length) {
+                    video[0].play();
+                }
+            });
+    
+            $('.slider-nav-complete').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                asNavFor: '.slider-for-complete',
+                dots: true,
+                centerMode: true,
+                centerPadding: '10%',
+                focusOnSelect: true,
+                nextArrow: '<div class="arrow right"></div>',
+                prevArrow: '<div class="arrow left"></div>',
+            });
+    
+            $('.slider-for-complete').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.slider-nav-complete',
+                autoplay: true,
+                speed: 300,
+                autoplaySpeed: 100000,
+                lazyLoad: 'ondemand'
+            });
+        });
+    </script>
+    <script src="./asset/canvas.js.下载"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const videos = document.querySelectorAll('video[muted][loop]');
+
+            const options = {
+                root: null, 
+                threshold: 0.5 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play();
+                    } else {
+                        entry.target.pause();
+                        entry.target.currentTime = 0; 
+                    }
+                });
+            }, options);
+
+            videos.forEach(video => {
+                observer.observe(video);
+            });
+        });
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("citation-text");
+            navigator.clipboard.writeText(copyText.textContent).then(function() {
+                alert("Citation copied to clipboard!");
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+    </script>
+
+
+<script async="" id="netlify-rum-container" src="./asset/rum" data-netlify-rum-site-id="e9069882-4c02-4cb0-b126-f9e5bc97532f" data-netlify-deploy-branch="master" data-netlify-deploy-context="production" data-netlify-cwv-token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlX2lkIjoiZTkwNjk4ODItNGMwMi00Y2IwLWIxMjYtZjllNWJjOTc1MzJmIiwiYWNjb3VudF9pZCI6IjVjMzQxNWY0ZTZjN2FjMWZkMzM0MmY0MSIsImRlcGxveV9pZCI6IjY5MDg4NTM5MWQ5M2JhMDAwOGIxNTY4NiIsImlzc3VlciI6Im5mc2VydmVyIn0.5-hcP3WXaOTQxFFlpGuWZacLbcuV4BymPFtPEEvapLY"></script>
+
+<div class="host-lopnbnfpjmgpbppclhclehhgafnifija" style="position: relative; z-index: 2147483647;"><template shadowrootmode="open"><style data-emotion="csslopnbnfpjmgpbppclhclehhgafnifija" data-s=""></style><div><div role="tooltip" class="MuiPopper-root select-popper-root host-lopnbnfpjmgpbppclhclehhgafnifija host-lopnbnfpjmgpbppclhclehhgafnifija-popper csslopnbnfpjmgpbppclhclehhgafnifija-1onddd3" style="position: fixed; top: 0px; left: 0px; display: none;"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 csslopnbnfpjmgpbppclhclehhgafnifija-trkxrt" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root csslopnbnfpjmgpbppclhclehhgafnifija-0"><div class="MuiBox-root csslopnbnfpjmgpbppclhclehhgafnifija-644370"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall csslopnbnfpjmgpbppclhclehhgafnifija-xz9haa" tabindex="0" type="button"><img src="chrome-extension://lopnbnfpjmgpbppclhclehhgafnifija/img/icon-38.png" style="width: 22px; height: 22px; border-radius: 4px;"></button></div></div></div></div></div><style data-emotion="csslopnbnfpjmgpbppclhclehhgafnifija-global" data-s=""></style><style data-emotion="csslopnbnfpjmgpbppclhclehhgafnifija-global" data-s=""></style></template></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
