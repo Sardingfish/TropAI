@@ -2,10 +2,10 @@
 
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-    <meta name="description" content="Project website for Spatiotemporal inhomogeneity of accuracy degradation in AI weather forecast foundation models: A GNSS perspective">
+    <meta name="description" content="Project website for Real-Time High-Resolution Global PWV Retrieval Based on Weather Forecast Foundation Models and Cross-Validation With Radiosonde, GNSS, and ERA5">
     <meta name="author" content="Jason Ding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Foundation Models, GNSS Tropospheric Delays, Pangu-Weather, GraphCast, FengWu, Forecasting">
+    <meta name="keywords" content="Foundation Models, GNSS PWV, Radiosonde,ERA5, Pangu-Weather, GraphCast, FengWu, Forecasting">
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
     <link href="./asset/css2" rel="stylesheet">
@@ -259,7 +259,7 @@
             </div>
             <div class="row" id="title">
                 <p class="col text-center text-title">
-                    Spatiotemporal inhomogeneity of accuracy degradation in AI weather forecast foundation models: A GNSS perspective
+                    Real-time high-resolution global PWV retrieval based on weather forecast foundation models and cross-validation with radiosonde, GNSS, and ERA5
                 </p>
             </div>
 
@@ -297,26 +297,6 @@
                                 <p>Lei Bai<sup>6</sup></p>
                             </a>
                         </li>
-                        <li class="list-inline-item mx-2">
-                            <a href="https://www.polyu.edu.hk/lsgi/people/mphil-and-phd-students/">
-                                <p>Yuyan Wang<sup>1</sup></p>
-                            </a>
-                        </li>
-                        <li class="list-inline-item mx-2">
-                            <a href="https://scholar.google.com/citations?user=Ps_txBAAAAAJ&hl=en">
-                                <p>Xiaolong Mi<sup>1</sup></p>
-                            </a>
-                        </li>
-                       <li class="list-inline-item mx-2">
-                            <a href="https://scholar.google.com/citations?user=CZ6shmkAAAAJ&hl=en">
-                                <p>Tong Liu<sup>1</sup></p>
-                            </a>
-                        </li>
-                        <li class="list-inline-item mx-2">
-                            <a href="https://scholar.google.com/citations?user=lhnpgegAAAAJ&hl=en">
-                                <p>Duojie Weng<sup>1,7</sup></p>
-                            </a>
-                        </li>
                     </ul>
                     <ul class="list-inline">
                         <li class="list-inline-item mx-4">
@@ -337,9 +317,6 @@
                         <li class="list-inline-item mx-4">
                             <p><sup>6</sup>Shanghai AI Lab</p>
                         </li>
-                        <li class="list-inline-item mx-4">
-                            <p><sup>7</sup>SZU</p>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -347,9 +324,9 @@
 
             <div class="row" id="venue">
                 <p class="col text-center text-venue">
-                  <a href="https://www.sciencedirect.com/journal/international-journal-of-applied-earth-observation-and-geoinformation">
-                  	INT J APPL EARTH OBS
-                  </a> 2025
+                	<a href="https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=4609443">
+                  IEEE J-STARS
+                  </a> 2024
                 </p>
               </div>
 
@@ -357,19 +334,13 @@
                 <div class="col text-center mt-m4">
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a href="https://doi.org/10.1016/j.jag.2025.104473" class="resource-button">
+                            <a href="https://doi.org/10.1109/JSTARS.2025.3580782" class="resource-button">
                                 <img src="./asset/paper_icon_rev.png" class="button-icon">
                                 Paper
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="https://ars.els-cdn.com/content/image/1-s2.0-S1569843225001207-mmc1.pdf" class="resource-button">
-                                <img src="./asset/add_database_icon_rev.png" class="button-icon">
-                                Supplementary Data
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://mp.weixin.qq.com/s/o7_W6DtL_BBjgYWGqtCYgQ" class="resource-button">
+                            <a href="https://mp.weixin.qq.com/s/nNhDQ9qR5SZpxmz9aDNi-A" class="resource-button">
                                 <img src="./asset/wechat_icon_rev.png" class="button-icon">
                                 WeChat
                             </a>
@@ -464,23 +435,14 @@
                         Abstract
                     </p>
                     <p class="body-text">
-												The artificial intelligence (AI) weather forecast foundation models can infer and generate precise global atmospheric state 
-												forecasts on the user’s device and with speed over 10,000 times faster than the operational Integrated Forecasting System (IFS), 
-												and it is making increasingly significant contributions to geodetic applications represented by the Global Navigation Satellite System (GNSS). 
-												However, existing studies on the investigation of these AI models are typically carried out by concentrating on specific one or several 
-												meteorological events in certain regions or by comparison with physical models, and the evaluation results obtained in this manner 
-												are not comprehensive and universal. Additionally, we find that the results obtained by the foundation models through the “rollout” 
-												method for forecasting are not uniform in terms of time and space. This temporal and spatial inhomogeneity of accuracy and accuracy 
-												degradation are related to AI algorithms and attributes of training data, etc., but these characteristics have not been thoroughly 
-												explored and analyzed. In this study, we obtained the global forecast results of foundation models for 2022 and subsequently 
-												derived the GNSS tropospheric delay through numerical integration. We calculated the mean deviation, mean absolute error, and root 
-												mean square error of these data. Using these metrics, we analyzed the spatiotemporal inhomogeneity in the accuracy degradation of 
-												foundation models, represented by Huawei Cloud Pangu-Weather, Google DeepMind GraphCast, and Shanghai AI Lab FengWu. We evaluated 
-												how this inhomogeneity changes with forecast time and identified the best-performing models across different regions and forecast 
-												durations. From the results, we find that taking topography into account when training the model enhances its accuracy at high altitudes, 
-												and the facilitating influence between the high related atmospheric variables such as precipitation and water vapor. The contributions of 
-												this study are twofold: it serves as a valuable reference for geodetic and remote sensing users employing foundational models, and offers 
-												insights and case supports for AI practitioners aiming to develop more accurate models for weather forecasting.
+												High-quality precipitable water vapor (PWV) plays a vital role in climate change and weather prediction studies. 
+												This research introduces a novel scheme for retrieving high-resolution surface-domain PWV with real-time and forecasting capabilities with global coverage, 
+												utilizing weather forecast foundation models represented by Huawei Cloud Pangu-Weather, Google DeepMind GraphCast, and Shanghai AI Lab FengWu. 
+												The accuracy of the new scheme is cross-validated against PWVs from radiosondes, Global Navigation Satellite Systems (GNSSs), and the fifth generation ECMWF reanalysis (ERA5). 
+												Results show the new scheme achieves 3.01 mm global root mean square error in real time, and the value reduce to 2.25 mm when focusing only on land areas, 
+												which is more accurate than most existing methods that rely on postprocessed surface-domain data. The poor accuracy in low-latitude and midlatitude ocean 
+												regions limits the accuracy of the new scheme and future integration of GNSS PWV data from ocean sources is expected to improve it. Overall, the proposed 
+												scheme demonstrates very satisfactory global PWV accuracy and has the potential for further improvement with the development of artificial intelligence.
                     </p>
                 </div>
             </div>
@@ -538,14 +500,12 @@
                     </p>
                     <div class="citation-block">
                         <div id="citation-text" class="citation-content">
-@article{ding2025spatiotemporal,
-  title={Spatiotemporal inhomogeneity of accuracy degradation in AI weather forecast foundation models: A GNSS perspective},
-  author={Ding, Junsheng and Chen, Wu and Chen, Junping and Wang, Jungang and Zhang, Yize and Bai, Lei and Wang, Yuyan and Mi, Xiaolong and Liu, Tong and Weng, Duojie},
-  journal={International Journal of Applied Earth Observation and Geoinformation},
-  volume={139},
-  pages={104473},
+@article{ding2025real,
+  title={Real-Time High-Resolution Global PWV Retrieval Based on Weather Forecast Foundation Models and Cross-Validation With Radiosonde, GNSS, and ERA5},
+  author={Ding, Junsheng and Chen, Wu and Chen, Junping and Wang, Jungang and Zhang, Yize and Bai, Lei},
+  journal={IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
   year={2025},
-  publisher={Elsevier}
+  publisher={IEEE}
 }
                         </div>
                         <button onclick="copyToClipboard()" class="button active mt-2">Copy</button>
