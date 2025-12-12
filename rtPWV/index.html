@@ -357,49 +357,18 @@
             <div class="row">
                 <div class="col my-3">
                     <div class="container" style="width: 100%; overflow: hidden;">
-                    		<center><b>Table I. Properties of (AI) weather forecast (foundation) models</b><br></center>
-                    		<a href="./asset/AImodels_table.png">
-                        	<img src="./asset/AImodels_table.png" ,="" class="center-img" style="width: 100%;"><br>
+ 
+                    		<a href="./asset/BIASandRMSE_FC2d.svg">
+                        <img src="./asset/BIASandRMSE_FC2d.svg" ,="" class="approach-figure" style="width: 48%; float: left; margin-right: 2%;">
                         </a>
-                    		
-                    		<center><b>Table II. Variables supported by different models</b><br></center>
-                    		<a href="./asset/variables.png">
-                        	<img src="./asset/variables.png" ,="" class="center-img" style="width: 100%;"><br>
+                        <a href="./asset/BIASandRMSE_FC5d.svg">
+                        <img src="./asset/BIASandRMSE_FC5d.svg" ,="" class="approach-figure" style="width: 48%; float: right;">
                         </a>
-												
-												<center><b>Table III. Effective pressure levels supported by different models</b><br></center>
-                    		<a href="./asset/valid_pressure.svg">
-                        	<img src="./asset/valid_pressure.svg" ,="" class="center-img" style="width: 100%;">
+                        <center><b>BIAS and RMSE of three models with 2 days forecasting and 5 days forecasting</b><br></center><br>
+                        
+                    		<a href="./asset/fc15d_grid.svg">
+                        	<img src="./asset/fc15d_grid.svg" ,="" class="center-img" style="width: 76%;"><br>
                         </a>
-                    </div>
-                    <div class="teaser-item">
-		                    <p class="text-header">
-		                        Why not include more AI models in this research?
-		                    </p>
-                    </div>
-                    <div class="teaser-item">
-                    		<p class="body-text" style="margin-top: 1rem;">
-		                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp We are primarily interested in how these weather forecast foundation models can be innovatively applied to geodesy and satellite remote sensing. 
-		                        Tropospheric delay is a path-integrated variable, the more data records along the integration path, the better the result. 
-		                        Generally, at least 25 layers are needed to keep the error from insufficient vertical resolution within an acceptable range. 
-		                        Models with only 13 pressure levels are too coarse for this purpose and would introduce unacceptable errors. 
-		                        Including them in a comparison would therefore be unfair. <br>
-
-														&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp We've consulted with the teams of <a href="https://www.nature.com/articles/s41586-023-06185-3">Pangu</a>, 
-														<a href="https://arxiv.org/abs/2304.02948">FengWu</a>, and <a href="https://arxiv.org/abs/2408.05472">Fuxi</a>, and the answers were consistent: increasing the pressure levels from 13 to 37 significantly 
-														raises computational resource demands but offers limited improvement in weather forecast accuracy. Therefore, we anticipate that for a long time to come, 
-														as long as there is no game-changing leap in GPU computing power, most follow-up research will not introduce 37-layer models. In other words, the current 
-														situation where only GraphCast and FengWu support the full 37 layers is likely to persist for some time. <br>
-														
-														&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp The reality has borne this out: subsequent models, such as <a href="https://arxiv.org/abs/2408.05472">FuXi</a>, 
-														<a href="https://arxiv.org/abs/2312.15796">GenCast</a>, 
-													  <a href="https://www.nature.com/articles/s41586-024-07744-y">NeuralGCM</a>, 
-														<a href="https://arxiv.org/abs/2301.10343">ClimaX</a>, 
-														<a href="https://arxiv.org/abs/2301.10343">Aurora</a>, 
-														<a href="https://arxiv.org/abs/2502.00338">OneForecast</a>, and 
-														<a href="https://www.nature.com/articles/s41586-025-08897-0">Aardvark Weather</a>, 
-														have not adopted support for 37 pressure levels. Even the AI version of IFS introduced by ECMWF (known as <a href="https://arxiv.org/abs/2406.01465">AIFS</a>) only supports 13 levels.
-                    		</p>
                     </div>
                 </div>
             </div>
@@ -411,16 +380,16 @@
             <div class="row" id="approach">
                 <div class="col my-3">
                     <p class="text-header">
-                        Spatiotemporal inhomogeneity of accuracy degradation
+                        PWV time series form different data sources and their comparisons
                     </p>
                     <div class="container" style="width: 100%; overflow: hidden;">
-                        <img src="./asset/rmse.png" ,="" class="center-img" style="width: 72%;">
+                        <img src="./asset/point_series_vs.svg" ,="" class="center-img" style="width: 72%;">
                     </div>
                     <p class="text-header">
-                        Top performer model of different area and forecast steps
+                        RMSEs of real-time PWV by three models and the variation of RMSEs with forecast time
                     </p>
                     <div class="container">
-                        <img src="./asset/bestperformer.png" ,="" class="center-img"  width="72%">
+                        <img src="./asset/RMSE_american.svg" ,="" class="center-img"  width="72%">
                     </div>
                 </div>
             </div>
