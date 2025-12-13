@@ -209,6 +209,38 @@
         right: 10px;  
         pointer-events: none;
     }
+    
+    .image-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .image-item {
+        width: 30%;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .image-item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        object-fit: cover;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        margin: 0 auto;
+    }
+
+    .image-title {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #333;
+        font-weight: 500;
+        display: block;
+    }
 
 </style><style>@keyframes loading {
     0% {
@@ -660,6 +692,46 @@
                     <p class="text-header">
                         Related Projects
                     </p>
+                    
+								    <div class="image-container">
+								        <div class="image-item">
+		                    		<a href="http://dingjunsheng.top/TropAI/rtGNSSPWV/">
+		                        <img src="https://raw.githubusercontent.com/Sardingfish/Sardingfish.github.io/master/image/AboutMe/GNSSPWVFM.png">
+		                        </a>
+		                        <a href="http://dingjunsheng.top/TropAI/rtGNSSPWV/">
+								            <p class="image-title">Real-time GNSS PWV</p>
+								            </a>
+								        </div>
+
+								        <div class="image-item">
+		                        <a href="http://dingjunsheng.top/TropAI/SpatioTempInhom/">
+		                        <img src="https://raw.githubusercontent.com/Sardingfish/Sardingfish.github.io/master/image/AboutMe/JAGFM.png">
+		                        </a>
+		                        <a href="http://dingjunsheng.top/TropAI/SpatioTempInhom/">
+								            <p class="image-title">SpatioTempInhom</p>
+								            </a>
+								        </div>
+
+								        <div class="image-item">
+		                        <a href="http://dingjunsheng.top/TropAI/rtPWV/">
+		                        <img src="https://raw.githubusercontent.com/Sardingfish/Sardingfish.github.io/master/image/AboutMe/FMPWV.png">
+		                        </a>
+		                        <a href="http://dingjunsheng.top/TropAI/rtPWV/">
+								            <p class="image-title">Real-time PWV</p>
+								            </a>
+								        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="approach">
+                <div class="col my-3">
+                    <p class="text-header">
+                        Related Links
+                    </p>
                     <p class="body-text" style="margin-top: 1rem;">
                         </p><ul>
                             <li>
@@ -718,7 +790,6 @@
             </div>
         </div>
     </section>
-
 
     <script type="text/javascript">
         $(document).ready(function () {
