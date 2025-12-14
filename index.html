@@ -241,6 +241,77 @@
         font-weight: 500;
         display: block;
     }
+    
+        /* 顶部按钮容器：横向排列，溢出滚动 */
+        .btn-container {
+            display: flex;
+            gap: 8px;
+            padding: 0 10px 15px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            margin: 0 auto 10px auto; /* 水平居中 */
+            max-width: 1200px; /* 限制最大宽度，适配大屏 */
+            justify-content: center; /* 按钮默认居中，超出时滚动 */
+        }
+        .gif-btn {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .gif-btn:hover {
+            background: #f0f0f0;
+        }
+        .gif-btn.active {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        /* 轮播容器：相对定位，适配宽度 */
+        .carousel-container {
+            position: relative;
+            max-width: 1200px; /* 和按钮容器一致，保证对齐 */
+            width: 90%; /* 小屏适配，占屏幕90% */
+            margin: 0 auto; /* 水平居中 */
+        }
+        /* 左右箭头样式 */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .arrow-left {
+            left: 10px;
+        }
+        .arrow-right {
+            right: 10px;
+        }
+        /* GIF图片样式 */
+        #gifCarousel {
+            width: 80%;
+            display: block;
+            margin: 0 auto 10px auto;
+            border-radius: 4px; /* 轻微圆角，提升视觉 */
+        }
 
 </style><style>@keyframes loading {
     0% {
@@ -653,6 +724,101 @@
 														</tr>
 												</table>
 										</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row" id="abstract">
+                <div class="col my-3">
+                    <p class="text-header">
+                        A Demo of the Products
+                    </p>
+								                    
+								    <!-- 顶部手动选择按钮容器 -->
+								    <div class="btn-container" id="btnContainer"></div>
+
+								    <!-- 轮播容器（含箭头+GIF） -->
+								    <div class="carousel-container">
+								        <!-- 左箭头 -->
+								        <button class="carousel-arrow arrow-left" id="arrowLeft">←</button>
+								        <!-- GIF显示 -->
+								        <img id="gifCarousel" src="./asset/fc_gif/zhd.gif" alt="轮播GIF">
+								        <!-- 右箭头 -->
+								        <button class="carousel-arrow arrow-right" id="arrowRight">→</button>
+								    </div>
+
+								    <script>
+								        // 13张GIF名称列表
+								        const gifNames = ['zhd', 'zwd', 'ah', 'aw', 'gnh', 'gnw', 'geh', 'gew', 'p', 't', 'e', 'tm', 'pwv'];
+								        const imgEl = document.getElementById('gifCarousel');
+								        const btnContainer = document.getElementById('btnContainer');
+								        const arrowLeft = document.getElementById('arrowLeft');
+								        const arrowRight = document.getElementById('arrowRight');
+								        let index = 0; // 当前显示索引
+								        let carouselTimer; // 自动轮播定时器
+
+								        // 初始化：生成顶部按钮 + 启动自动轮播
+								        init();
+
+								        // 初始化函数
+								        function init() {
+								            createGifButtons(); // 生成按钮
+								            startAutoCarousel(); // 启动自动轮播
+								            // 绑定箭头点击事件
+								            arrowLeft.addEventListener('click', () => switchGif(index - 1));
+								            arrowRight.addEventListener('click', () => switchGif(index + 1));
+								        }
+
+								        // 生成GIF选择按钮
+								        function createGifButtons() {
+								            gifNames.forEach((name, idx) => {
+								                const btn = document.createElement('button');
+								                btn.className = `gif-btn ${idx === 0 ? 'active' : ''}`; // 初始第一个按钮高亮
+								                btn.textContent = name;
+								                btn.dataset.index = idx; // 存储对应索引
+								                // 按钮点击事件：切换到对应GIF
+								                btn.addEventListener('click', () => switchGif(idx));
+								                btnContainer.appendChild(btn);
+								            });
+								        }
+
+								        // 切换GIF核心函数（处理边界 + 更新DOM + 重置定时器）
+								        function switchGif(targetIndex) {
+								            // 处理边界：循环轮播
+								            index = (targetIndex + gifNames.length) % gifNames.length;
+								            // 更新GIF路径
+								            imgEl.src = `./asset/fc_gif/${gifNames[index]}.gif`;
+								            // 更新按钮高亮状态
+								            updateActiveButton();
+								            // 重置自动轮播定时器（手动操作后重新计时）
+								            resetAutoCarousel();
+								        }
+
+								        // 更新按钮高亮状态
+								        function updateActiveButton() {
+								            const allBtns = document.querySelectorAll('.gif-btn');
+								            allBtns.forEach((btn, idx) => {
+								                btn.classList.toggle('active', idx === index);
+								            });
+								        }
+
+								        // 启动自动轮播
+								        function startAutoCarousel() {
+								            carouselTimer = setInterval(() => {
+								                switchGif(index + 1);
+								            }, 6000);
+								        }
+
+								        // 重置自动轮播定时器
+								        function resetAutoCarousel() {
+								            clearInterval(carouselTimer);
+								            startAutoCarousel();
+								        }
+								    </script>
+
                 </div>
             </div>
         </div>
